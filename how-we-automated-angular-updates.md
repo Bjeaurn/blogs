@@ -42,7 +42,7 @@ then
 fi
 ```
     
-In this step, we check and determine if there are no updates (`No outdated dependencies!`), if the update is not compatible with automatic upgrading, or that it indeed succeeded and there are changes to files on our filesystem. Depending on the above outcome, we might `return non-zero` and send a message to our communication platform to alert a developer to potential manual steps.
+In this step, we check and determine if there are no updates (`No outdated dependencies!`), if the update is not compatible with automatic upgrading, or that it indeed succeeded and there are changes to files on our filesystem. Depending on the above outcome, we might `return non-zero` and send a message to our communication platform to alert a developer.
 
 #### Github/Gitlab API
 When the update has indeed succeeded and we have determined that there are changes to the filesystem, we could run the default pipeline that contains `ng test` and `ng e2e`. However, our environment runs CI jobs automatically on `pull requests`, so we just create the pull request and let CI take it from there. 
