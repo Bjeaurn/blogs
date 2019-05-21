@@ -43,7 +43,7 @@ We decided to also send a message when the update ran, but no dependency changes
 
 For us this easily integrated in our steps, where the final result would contain a link to the new `pull request`, and a failed attempt with incompatible changes, or no changes at all would send different messages. Keeping our developers actively in the loop of any changes outside our development.
 
-### When/how do we run this pipeline?
+### When and how do we run this pipeline?
 
 Our CI allows for automatically scheduled builds, solutions like Jenkins and Gitlab offer these out of the box. We have it set up so that it runs once a week.
 
