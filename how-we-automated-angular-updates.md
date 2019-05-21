@@ -6,7 +6,7 @@ usually within a week of release, without hesitation or issues since Angular 4.
 This process has been delightful and very low effort. You get a compile error with some breaking changes and maybe there's some 
 manual work to be done. But other than that, it's been quite effortless and easy to maintain.
 
-So much even that we have automated our Angular upgrade process using our CI solution.
+So much that we have automated our Angular upgrade process using our CI solution.
 
 ### How we did it
 
@@ -28,10 +28,10 @@ The Angular CLI has built in update functionality that we leveraged. Running `ng
 In this step, we check and determine if there are no updates (`No outdated dependencies!`), if the update is not compatible with automatic upgrading, or that it indeed succeeded and there are changes to files on our filesystem. Depending on the above outcome, we might `return non-zero` and send a message to our communication platform to alert a developer to potential manual steps.
 
 #### Github/Gitlab API
-When the updated indeed succeeded and we have determined that there are changes to the filesystem, we could run the default pipeline that contains `ng test` and `ng e2e`. However, our environment runs CI jobs automatically on `pull requests`, so we just create the pull request and let CI take it from there. 
+When the update has indeed succeeded and we have determined that there are changes to the filesystem, we could run the default pipeline that contains `ng test` and `ng e2e`. However, our environment runs CI jobs automatically on `pull requests`, so we just create the pull request and let CI take it from there. 
 
 For us, this means that we have to `commit` to our new branch and `push` our branch to the repository. 
-In order to get this to work, you may need to allow your CI's SSH key so it has the rights to create and push new branches.
+In order to get this to work, you may need to allow your CI's `SSH key` so it has the rights to create and push new branches.
 
 After that, we use the provided API's from our `Git management platform` like Github or Gitlab to create a new `Pull Request`. For us this consisted of sending a `HTTP POST` to a URL with a required `payload` containing our `branch name`, the `target branch` and a `title` reflecting the changes. 
 
@@ -42,4 +42,21 @@ Optionally you could include your communication platform of choice; a simple `We
 We decided to also send a message when the update ran, but no dependency changes were detected; to remind us to keep track. 
 
 For us this easily integrated in our steps, where the final result would contain a link to the new `pull request`, and a failed attempt with incompatible changes, or no changes at all would send different messages. Keeping our developers actively in the loop of any changes outside our development.
+
+### When/how do we run this pipeline?
+
+Our CI allows for automatically scheduled builds, solutions like Jenkins and Gitlab offer these out of the box. We have it set up so that it runs once a week.
+
+This way we can come in fresh on a Monday, and hopefully be greeted by a fresh `pull request` with the latest Angular updates to start off your week.
+
+In case your CI doesn't support this, there's enough creative ways to achieve something similar. A `cronjob` that triggers are rebuild on your pipeline might already do the job.
+
+### In conclusion
+
+We automated these steps for two reasons: 
+
+- They take up some valuable time from our developers; but there's no reason a bot couldn't do the basic steps for us. 
+- This actively alerts our developers to keep track of updates. When the bot reports a failure, we know there's manual steps to be taken to keep us up to date and our codebase happy.
+
+We would highly recommend you explore these possibilities for your own project, and save yourself some valuable time!
 
