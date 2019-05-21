@@ -15,7 +15,7 @@ We have 5 steps in our CI pipeline. For our example we used Jenkins, but there's
 Our 5 steps consist of:
 - Git checkout, workspace cleanup and creating a new branch.
 - Using the Angular CLI to run our updates.
-- If the updates failed, or there were no updates available; we send a message to our communication platform of choice. 
+- If the updates cannot be applied automatically, or there were no updates available; we send a message to our communication platform of choice. 
 - If the updates succeeded, we commit the changes and push our new branch to our git repository.
 - We then create a Pull Request using the API of our git management platform and post the resulting URL to our communication platform. While it waits for us to be reviewd, our CI will run a full test-suite on the new Pull Request.
 
