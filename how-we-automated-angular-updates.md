@@ -38,7 +38,7 @@ After that, we use the provided API's from our `Git management platform` like Gi
 After this, the `pull request` is made and ran by CI automatically to check if the changes break the pipeline.
 
 #### Communication channel
-Optionally you could include your communication platform of choice; a simple `Webhook` call in the form of `HTTP POST` to Slack or RocketChat makes it possible to notify a channel of a new (automatic) pull request, or a failed attempt. 
+Optionally you could include your communication platform of choice; a simple `Webhook` call in the form of `HTTP POST` to Slack (or comparable alternatives) makes it possible to notify a channel of a new (automatic) pull request, or a failed attempt. 
 We decided to also send a message when the update ran, but no dependency changes were detected; to remind us to keep track. 
 
 For us this easily integrated in our steps, where the final result would contain a link to the new `pull request`, and a failed attempt with incompatible changes, or no changes at all would send different messages. Keeping our developers actively in the loop of any changes outside our development.
