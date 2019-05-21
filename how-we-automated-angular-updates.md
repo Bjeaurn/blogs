@@ -17,13 +17,13 @@ Our 5 steps consist of:
 - Using the Angular CLI to run our updates.
 - If the updates cannot be applied automatically, or there were no updates available; we send a message to our communication platform of choice. 
 - If the updates succeeded, we commit the changes and push our new branch to our git repository.
-- We then create a Pull Request using the API of our git management platform and post the resulting URL to our communication platform. While it waits for us to be reviewd, our CI will run a full test-suite on the new Pull Request.
+- We then create a Pull Request using the API of our git management platform and post the resulting URL to our communication platform. While it waits for us to be reviewed, our CI will run a full test-suite on the new Pull Request.
 
 #### Git checkout
 We clean our workspace, checkout the `master` branch and make sure we create a new separate branch. Because we use something resembling `git-flow` and `semantic commit messages`; our generated branches might look like this: `chore-ngupdate/autoupdater-2019-05-21`. 
 
 #### Angular CLI
-The Angular CLI has built in update functionality that we leveraged. Running `ng update --all` is sufficient with most solutions. In some cases where you run a private repository like Nexus, we found that the `--all` flag ran into some issues. But you can script around this using some `grep` and `awk` commands to get the results you need to run your manual `ng update @angular/core rxjs` commands:
+The Angular CLI has built in update functionality that we leveraged. Running `ng update --all` is sufficient with most solutions. In some cases where you run a private repository like Nexus, we found that the `--all` flag ran into some issues. But you can script around this using some `grep` and `awk` commands to get the results you need to run your manual `ng update @angular/core rxjs ...` commands:
 
 ```
 ng update --registry https://path/to/your/registry 2>&1 | tee update-result.txt
@@ -45,9 +45,9 @@ fi
 In this step, we check and determine if there are no updates (`No outdated dependencies!`), if the update is not compatible with automatic upgrading, or that it indeed succeeded and there are changes to files on our filesystem. Depending on the above outcome, we might `return non-zero` and send a message to our communication platform to alert a developer.
 
 #### Github/Gitlab API
-When the update has indeed succeeded and we have determined that there are changes to the filesystem, we could run the default pipeline that contains `ng test` and `ng e2e`. However, our environment runs CI jobs automatically on `pull requests`, so we just create the pull request and let CI take it from there. 
+When the update has indeed succeeded and we have determined that there are changes to the filesystem, we could run the default pipeline that contains `ng test` and `ng e2e`. However, our environment runs CI jobs automatically on `pull requests`, so we just create the `pull request` and let CI take it from there. 
 
-For us, this means that we have to `commit` to our new branch and `push` our branch to the repository. 
+For us, this means that we have to `commit` to our new branch and `push` the branch to the repository. 
 In order to get this to work, you may need to allow your CI's `SSH key` so it has the rights to create and push new branches.
 
 After that, we use the provided API's from our `Git management platform` like Github or Gitlab to create a new `Pull Request`. For us this consisted of sending a `HTTP POST` to a URL with a required `payload` containing our `branch name`, the `target branch` and a `title` reflecting the changes. 
@@ -66,7 +66,7 @@ Our CI allows for automatically scheduled builds, solutions like Jenkins and Git
 
 This way we can come in fresh on a Monday, and hopefully be greeted by a fresh `pull request` with the latest Angular updates to start off your week.
 
-In case your CI doesn't support this, there's enough creative ways to achieve something similar. A `cronjob` that triggers are rebuild on your pipeline might already do the job.
+In case your CI doesn't support this, there's enough creative ways to achieve something similar. A `cronjob` that triggers a rebuild on your `autoupdater` pipeline might already do the job.
 
 ### In conclusion
 
