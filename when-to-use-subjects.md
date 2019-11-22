@@ -132,6 +132,9 @@ data.subscribe(console.log)
 // A better example is perhaps: Taking an ID from a route, and instead of putting that on a self managed ReplaySubject eventbus; you can create an
 // observable stream from the Route and offer that as an Observable.
 // Will require a bit more work to show the example in just Stackblitz I think?
+// Here we go: https://stackblitz.com/edit/angular-ef9qxx?file=src%2Fapp%2Fdata.service.ts
+// Works better locally, but shows the idea.
+
 
 ## Ok, so when do I use a Subject?
 
