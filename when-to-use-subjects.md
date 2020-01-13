@@ -4,13 +4,13 @@ When using RxJS, it can be a bit difficult to grasp what operator does what. It'
 
 ##  What are Subjects?
 
-A `Subject` is a RxJS concept that creates an `Observable` that you can "push" new data to. This is a very powerful concept, as it allows you to work in reactive way using RxJS; without sacrificing flexibility of sending data and messages like events between application components.
+A `Subject` is an RxJS concept that creates an `Observable` that you can "push" new data to. This is a very powerful concept, as it allows you to work in reactive way using RxJS; without sacrificing the flexibility of sending data and messages like events between application components.
 
 ## So why shouldn't I use Subjects?!
 
 The main purpose of working Reactively using a library like RxJS, is that you use Observables throughout your application. In a lot of cases, you do not need to manage this yourself by creating a Subject and pushing data throughout.
 
-The main difference with Subjects is that they are, by nature, hot observables which need to be opened and closed properly. You will need to take into account subscription management, making sure you do not expose the Subject directly and so on. Whereas creation operators can achieve the same result in a safe and predictable way.
+The main difference with Subjects is that they are, by nature, hot observables which need to be opened and closed properly. You will need to take into account subscription management, making sure you do not expose the Subject directly and so on. Whereas creation operators can achieve the same result safely and predictably.
 
 The main rule that I see for using Subjects is: 
 >Do not use Subjects when you can use another `creation operator`.
@@ -41,7 +41,7 @@ return from([1, 2, 3])
 ```
 
 #### fromEvent
-Creates an Observable stream from event(s). For example a mouse click on a HTML element can be turned into a stream of click events using this operator.
+Creates an Observable stream from event(s). For example, a mouse click on an HTML element can be turned into a stream of click events using this operator.
 
 ```ts
 fromEvent(document, 'click')
@@ -133,21 +133,20 @@ data.subscribe(console.log)
 // observable stream from the Route and offer that as an Observable.
 // Will require a bit more work to show the example in just Stackblitz I think?
 // Here we go: https://stackblitz.com/edit/angular-ef9qxx?file=src%2Fapp%2Fdata.service.ts
-// Works better locally, but shows the idea.
+// Works better locally but shows the idea.
 
 
 ## Ok, so when do I use a Subject?
 
-Whenever you need an Observable that has an unpredictable lifecycle length, and it's values cannot be predicted or gathered from an external source within your code. That's when you use a Subject.
+Whenever you need an Observable that has an unpredictable lifecycle length, and its values cannot be predicted or gathered from an external source within your code. That's when you use a Subject.
 
 // TODO: Examples voor beide oorzaken.
 - Unpredictable lifecycle
 
 An Observable that runs for the entire lifecycle of the application is still predictable in that sense. An `interval(1000)` will tick once every second for as long as it's subscribed to, but an Observable that is created upon the start of a component and should last till the component is removed and teared down for whatever reason is a tad more tricky. Creating a Subject that is contained within the component on initialization and emitting a value when it is marked for teardown. As long as it's contained within the component this is a great way to use a Subject. 
-Although, if the teardown of the component is heavily relient on user actions, the argument can be made that a combination of Observables including a `fromEvent()` could give you the exact same Observable stream of user events that will trigger teardown.
+Although, if the teardown of the component is heavily reliant on user actions, the argument can be made that a combination of Observables including a `fromEvent()` could give you the same Observable stream of user events that will trigger teardown.
 
-The reason why you would need a Subject here is because you setup streams beforehand. If you need other Observable streams to `takeUntil()` on a `toBeDestroyed$` stream, you cannot initialize the `toBeDestroyed$` in the teardown logic; as it will not exist at the point in time when the listening stream is created. As long as you are able to create these streams by, for example, listening to user actions with `fromEvent`; you may not need a Subject.
+The reason why you would need a Subject here is that you setup streams beforehand. If you need other Observable streams to `takeUntil()` on a `toBeDestroyed$` stream, you cannot initialize the `toBeDestroyed$` in the teardown logic; as it will not exist at the point in time when the listening stream is created. As long as you can create these streams by, for example, listening to user actions with `fromEvent`; you may not need a Subject.
 
 - Unpredictable values or values cannot be gathered from an external source
-
 
